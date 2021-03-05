@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- <link rel="stylesheet" href="{{asset('UI/home1.css')}}" /> -->
+  <link rel="stylesheet" href="{{asset('UI/userHome.css')}}" />
+
+</head>
+
+<body>
+  <div class="main-container">
+    <nav class="user-home__top-nav">
+      <div class="top-nav__content">
+        <div class="icon-container d-flex justify-content-center align-items-center h-100">
+          <button class="icon-container__button button sidenav-trigger">
+            <span class="material-icons"> menu </span>
+          </button>
+          <div class="logo-container">
+            <h3 class="m-0"><a style="color:white;text-decoration: none;" href="{{URL::to('/')}}">Era VietNam</a></h3>
+          </div>
+        </div>
+        <div class="right-container">
+          <div class="right-container__inner">
+            <div class="button"><span class="material-icons"> language </span></div>
+            <div class="user-name d-none d-sm-block">{{Auth::user()->fullname}}</div>
+            <div class="button-container">
+              <button class="button text-white">
+                <span class="material-icons"> person </span>
+              </button>
+              <div class="drop-down"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <aside class="navigation sidenav" id="nav" style="">
+      <div class="list">
+        <div>
+          <a href="" class="list__tile">
+            <div class="list__tile__action"><span class="material-icons"> dashboard </span></div>
+            <div class="list__tile__title">Tổng quan</div>
+          </a>
+        </div>
+        <div>
+          <a href="" class="list__tile">
+            <div class="list__tile__action"><span class="material-icons"> group_add </span></div>
+            <div class="list__tile__title">Thêm tài khoản</div>
+          </a>
+        </div>
+        <div>
+          <a href="" class="list__tile">
+            <div class="list__tile__action"><span class="material-icons"> ondemand_video </span></div>
+            <div class="list__tile__title">Video của bạn</div>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="content-wrap">
+        <div class="home-page">
+          <div class="content-container">
+            <div class="top text-center">
+              <div class="text-box" style="margin-top: 60px">
+                <div style="font-size: 29px; font-weight: bold">Welcome {{Auth::user()->fullname}}</div>
+
+              </div>
+            </div>
+            <div>
+              <form method="post" action="{{URL::to('dashboard/user/1')}}">
+                @csrf
+                @method('PUT')
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label>Tên đăng nhập</label>
+                      <input type="" class="form-control bora-none" disabled="false" value="{{$user->name}}" name="username">
+                    </div>
+                    <div class="form-group">
+                      <label>Họ và Tên</label>
+                      <input type="" class="form-control bora-none" value="{{$user->fullname}}" name="fullname">
+                    </div>
+                    <div class="form-group">
+                      <label>Ngày sinh (yyyy-mm-dd)</label>
+                      <input type="" id="datepicker1" value="{{$user->birth}}" class="form-control bora-none" name="birth">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label>Giới tính</label>
+                      <select name="sex" id="">
+                        <option value="1">Nam</option>
+                        <option value="2">Nữ</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Số điện thoại</label>
+                      <input type="" value="{{$user->phone}}" class="form-control bora-none" name="phone">
+                    </div>
+                    <div class="form-group">
+                      <label>Địa chỉ</label>
+                      <input type="" value="{{$user->address}}" class="form-control bora-none" name="phone">
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <button class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                  </div>
+                </div>
+
+
+              </form>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-6">
+                <div class="card-service">
+                  <div class="card" >
+                    <img class="card-img-top card-img__cus" src="{{asset('img/login.jpg')}}" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Sách PDF</h5>
+                      <p class="card-text">Tải về sách PDF của bạn để khám phá thêm nhiều điều thú vị từ chính bản thân của bạn.</p>
+                      <a href="#" class="btn btn-primary">Tải về </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-6">
+                <div class="card-service">
+                  <div class="card" >
+                    <img class="card-img-top card-img__cus" src="https://assets.stickpng.com/images/580b57fcd9996e24bc43c545.png" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">Video của bạn</h5>
+                      <p class="card-text">Xem video về bạn một cách trực quan và chi tiết với video chúng tôi dành riêng cho bạn.</p>
+                      <a href="#" class="btn btn-warning">Xem video </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+<script type="text/javascript">
+  $("#datepicker1j").datepicker();
+  $.datepicker.setDefaults({
+    showOn: "both",
+    buttonImageOnly: true,
+    buttonImage: "calendar.gif",
+    buttonText: "Calendar",
+    dateFormat: "yy-mm-dd",
+    changeYear: true,
+    changeMonth: true
+  });
+
+  $.datepicker.setDefaults($.datepicker.regional["vi"]);
+</script>
+<script src="{{asset('js/userHone.js')}}"></script>
+
+</html>

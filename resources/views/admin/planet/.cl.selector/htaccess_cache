@@ -1,0 +1,12 @@
+[/home/ksh/public_html]
+htaccess_list = /home/ksh/public_html/oldkshland/kshadm/ckfinder/userfiles/.htaccess,/home/ksh/public_html/.htaccess,/home/ksh/public_html/kshland/kshadm/ckfinder/userfiles/.htaccess
+
+[/home/ksh/public_html/ksh.vn]
+htaccess_list = /home/ksh/public_html/ksh.vn/public/.htaccess,/home/ksh/public_html/ksh.vn/vendor/scrivo/highlight.php/demo/.htaccess,/home/ksh/public_html/ksh.vn/vendor/scrivo/highlight.php/tools/.htaccess,/home/ksh/public_html/ksh.vn/.htaccess
+
+[/home/ksh/public_html/duongthao.edu.vn]
+htaccess_list = /home/ksh/public_html/duongthao.edu.vn/vendor/scrivo/highlight.php/demo/.htaccess,/home/ksh/public_html/duongthao.edu.vn/vendor/scrivo/highlight.php/tools/.htaccess,/home/ksh/public_html/duongthao.edu.vn/.htaccess
+
+[/home/ksh/public_html/loto188vip.com]
+htaccess_list = /home/ksh/public_html/loto188vip.com/public/.htaccess
+

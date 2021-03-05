@@ -1,0 +1,22 @@
+.btn.btn-login {
+  background: #1b1b1b;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.page-login .left {
+  background: #1b1b1b;
+  position: relative;
+  min-height: 100px;
+}
+
+.page-login .right {
+  min-height: 100vh;
+}
+
+.page-login .btn {
+  min-width: 180px;
+  height: 48px;
+  border: 1px solid #31bdb9;
+}
+/*# sourceMappingURL=loginPage.css.map */

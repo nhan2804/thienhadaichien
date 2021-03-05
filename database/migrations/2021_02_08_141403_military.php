@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class Military extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('military', function (Blueprint $table) {
+            $table->id('id_m');
+            $table->string('name_m');
+            $table->string('desc_m');
+            $table->integer('weight_m');
+            $table->integer('ability_m');
+            $table->integer('ability_re_m');
+            $table->integer('speed_m');
+            $table->integer('ranked_m');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('military');
+    }
+}
