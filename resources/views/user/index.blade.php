@@ -108,15 +108,20 @@
 	</header>
 	<main>
 		<a href="#" onclick="history.back()" class="color-weight"><i class="fas fa-arrow-left"></i> Trở về</a>
+		<br>
+		<a href="{{URL::to('dashboard/')}}" onclick="history.back()" style="font-size: 1.5rem"><i class="fas fa-home"></i>Nhà của bạn</a>
 		<div class="row">
 			<div class="col-lg-2">
 				<div>
+
 				@yield('left-bar')
 				</div>
 			</div>
 			<div class="col-lg-8">
 				<div>
 					<a href="{{URL::to('dashboard/setup')}}" class="btn btn-success"><i class="fas fa-plus"></i> Thu nguyên liệu</a>
+					<br>
+
 				@yield('content')
 				</div>
 			</div>

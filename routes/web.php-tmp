@@ -23,11 +23,13 @@ Route::post('/login', 'UserController@login');
 Route::post('/register', 'UserController@register');
 
 Route::prefix('dashboard')->middleware(['login'])->group(function () {
+		// chọn hành tinh
 		Route::post('/user/choose-planet/', 'DashboardController@choose_planet');
 		Route::post('/user/planet/', 'DashboardController@planet');
 		Route::get('/user/{id}', 'DashboardController@choose_planet');
 		Route::get('/update-all', 'DashboardController@update_all');
 
+		// Xây dựng công trình
 		Route::post('/build/destroy', 'DashboardController@destroy_c');
 		Route::get('/build/built', 'DashboardController@built');
 		Route::get('/build/hide', 'DashboardController@hideAll');
@@ -41,6 +43,9 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
 		Route::get('/build/hide', 'DashboardController@hideAll');
 		Route::get('/init', 'DashboardController@init');
 
+		// Route::get('/build/set-status/{id}','DashboardController@set_status');
+		//Quân sự
+
 		Route::post('/military/destroy', 'MilitaryController@destroy_m');
 		Route::get('/military/hide', 'MilitaryController@hideAll');
 		Route::resource('/military', 'MilitaryController');
@@ -52,9 +57,21 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
 		Route::get('/overview', 'HomeUserController@overview');
 		Route::get('/news', 'HomeUserController@news');
 		Route::get('/intelligence-agencies', 'HomeUserController@intelligence_agencies');
-		Route::get('/headquarter', 'HomeUserController@headquarter');
-		Route::get('/headquarter/army', 'HomeUserController@army');
-		Route::get('/headquarter/colony', 'HomeUserController@colony');
+		// Route::get('/headquarter','HomeUserController@headquarter');
+		// Route::get('/headquarter/army','HomeUserController@army');
+
+		// Phòng thủ
+		Route::prefix('headquarter')->group(function () {
+
+				Route::get('/defense', 'DefenseController@index2');
+				Route::get('/', 'DefenseController@overview');
+
+				Route::post('/defense/add', 'DefenseController@add');
+				Route::post('/defense/insert', 'DefenseController@insert');
+				Route::post('/defense/detail', 'DefenseController@detail');
+
+			});
+		// Route::get('/headquarter/colony','HomeUserController@colony');
 		Route::get('/market', 'HomeUserController@market');
 		// Trang thống kê
 		Route::get('/', 'HomeUserController@index');
