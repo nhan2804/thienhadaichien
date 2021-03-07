@@ -7,8 +7,14 @@
 </ul>
 @endsection
 @section('content')
-<h4>Phòng thủ</h4>
-	@foreach($cons_own as $k=>$v)
+	@yield('content')
+	<h4>MỤC TIÊU / TẤN CÔNG</h4>
+	<div>
+        <input type="text">
+        <button>Tấn công thần tốc</button>
+	</div>
+   
+	@foreach($cons as $k=>$v)
 		<div class="border-p mb-1">
 			<div class="row">
 				<div class="col-lg-4">
@@ -18,74 +24,69 @@
 					<h5 class="m-0">{{$v->name_c}} : {{$v->quantity}}</h5>
 					<p>{{$v->desc_c}}</p>
 					<div class="d-flex justify-content-end mb-1">
-						<div>
-							<form>
-								<select>
-									<option>Quyết liệt</option>
-									<option>All in</option>
-									<option>Options</option>
-								</select>
-								<button class="btn btn-danger">Chiến đấu</button>
-							</form>
-						</div>
+						
 					</div>
 
 					 <div class="d-flex justify-content-end">
 						<div>
+							
 							<button data-id="{{$v->id_c}}"  data-toggle="modal" data-target="#exampleModal" class="btn btn-info btn-view">Xem chi tiết</button>
-							<button data-id="{{$v->id_c}}" class="btn-defense btn-modal btn btn-warning"  data-toggle="modal" data-target="#exampleModalCenter">Phòng thủ</button>
+							<button data-id="{{$v->id_c}}"  data-user="{{$v->id_user_c}}" class="btn-attack btn-modal btn btn-warning"  data-toggle="modal" data-target="#exampleModalCenter">Tấn công</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		@endforeach
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Chi tiết lính</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="detail-body">
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Thêm lính để phòng thủ công trình này</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form id="submit">
-      	
-      <div class="modal-body" id="render-body">
-        
-      </div>
-      <div class="d-flex justify-content-end">
-      </div>
-      
-      <div class="modal-footer">
-      	<input type="hidden" value="1" id="id_c_input" name="id_c">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
-        <button type="submit" data-id="" id="btn-confirm" class="btn btn-primary">Thủ</button>
-      </div>
+	@endforeach
 
-      </form>
-    </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Chi tiết lính</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body" id="detail-body">
+		  
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+		</div>
+	  </div>
+	</div>
   </div>
-</div>
-<script type="text/javascript">
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLongTitle">Thêm lính để tấn công công trình này</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<form id="submit">
+			
+		<div class="modal-body" id="render-body">
+		  
+		</div>
+		<div class="d-flex justify-content-end">
+		</div>
+		
+		<div class="modal-footer">
+			<input type="hidden" value="1" id="id_c_input" name="id_c">
+			<input type="hidden" value="1" id="id_u_input" name="id_user_attacked">
+			
+		  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+		  <button type="submit" data-id="" id="btn-confirm" class="btn btn-primary">Tấn Công</button>
+		</div>
+  
+		</form>
+	  </div>
+	</div>
+  </div>
+  <script type="text/javascript">
 	$.ajaxSetup({
 	    headers: {
 	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -116,29 +117,25 @@
 		let form = $(this);
 		 $.ajax({
            type: "POST",
-           url: "defense/insert",
+           url: "insert",
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
                alert(data); // show response from the php script.
-			   console.log(data);
-           },
-		   error: function (jqXHR, textStatus, errorThrown) {
-           console.log(errorThrown);
            }
          });
          event.preventDefault();
 	});
-	$('.btn-defense').on('click', function(event) {
+	$('.btn-attack').on('click', function(event) {
 		$('#id_c_input').val($(this).data('id'));
+		$('#id_u_input').val($(this).data('user'));
 		$.ajax({
-		url: 'add',
+		url: '../headquarter/add',
 		type: 'POST',
 		data: {id: $(this).data('id')},
 		})
 		.done(function(d) {
-			console.log(d);
-			
+			// console.log(render(d));
 			$('#render-body').html(render(d));
 		})
 		.fail(function() {
@@ -170,6 +167,5 @@
 	
 	
 </script>
-
-
 @endsection
+

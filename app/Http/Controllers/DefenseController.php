@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use App\MilitaryUser;
+use App\MilitaryAction;
 class DefenseController extends Controller
 {
 	
@@ -28,26 +29,23 @@ class DefenseController extends Controller
         ->join('military_user', 'military_user.id_mili_m','military.id_m')
         ->where('military_user.id_user_m',Auth::user()->id)
         ->where('military_user.status_m',1)
-        ->where('military_user.id_con_def',null)
+        ->where('military_user.status_free',0)
         ->groupBy('id_mili_m')
         ->get();
+
+        // $my_milis=  DB::table('military_action')
+    	// ->select('*',DB::raw('COUNT(id_mili_m) as quantity'))
+        //     ->join('military_user', 'military_user.id_mili_m','military_action.id_mil')
+        //     ->join('military', 'military_user.id_mili_m','military.id_m')
+        //     ->where('military_user.id_user_m',Auth::user()->id)
+        //     ->where('military_user.status_m',1)
+        //     ->where('military_user.status_free',0)
+        //     ->groupBy('id_mili_m')
+        //     ->get();
         return view('user.headquarter.index',['my_milis'=>$my_milis]);
 	}
     
-    public function add()
-    {
-    	$my_milis=  DB::table('military')
-    	->select('*',DB::raw('COUNT(id_mili_m) as quantity'))
-            ->join('military_user', 'military_user.id_mili_m','military.id_m')
-            ->where('military_user.id_user_m',Auth::user()->id)
-            ->where('military_user.status_m',1)
-            ->where('military_user.id_con_def',null)
-            ->groupBy('id_mili_m')
-            ->get();
-            
-            // echo "string";
-          return response()->json($my_milis);
-    }
+    
     public function detail(Request $r)
     {
     	$detail = DB::table('military')
@@ -66,11 +64,42 @@ class DefenseController extends Controller
     	$arr=$r->all();
     	$id_c = $r->id_c;
     	array_pop($arr);
+        // array_filter($arr);
+       
     	$id_u=Auth::user()->id;
     	foreach ( $arr as $k => $v) {
-    		$d=MilitaryUser::where('id_user_m',$id_u)->where('id_mili_m',$k)->where('status_m',1)->where('military_user.id_con_def',null)->take($v)->update(['id_con_def'=>$id_c]);
-    		
-    		// return $k;
+            if($v){
+                $d=MilitaryUser::where('id_user_m',$id_u)->where('id_mili_m',$k)->where('status_m',1)->where('status_free',0)->take($v)->update(['status_free'=>1]);
+            
+
+            // $arr = [
+            //     'id_user'=>$id_u,
+            //     'id_con_def'=>$id_c,
+            //     'id_mil'=> $k,
+
+            //     'quantity'=>$v
+            // ];
+            // $update = [
+            //     'quantity'=>$v
+            // ];
+            // $military_action= MilitaryAction::updateOrCreate($arr, $update);
+            $check= MilitaryAction::where('id_user',$id_u)
+            ->where('id_con_def',$id_c)
+            ->where('id_mil',$k)
+            ->first();
+            if($check){
+                $check->quantity_mil=$check->quantity_mil+$v;
+
+                $check->save();
+            }else{
+                $new = new MilitaryAction;
+                $new->id_user=$id_u;
+                $new->id_con_def=$id_c;
+                $new->id_mil= $k;
+                $new->quantity_mil=$v;
+                $new->save();
+            }
+        }
     	}
     	return "ok lun";
     }

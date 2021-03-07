@@ -1,7 +1,7 @@
 @extends('user.index')
 @section('left-bar')
 <ul class="p-0 list-menu">
-    <li><a href="{{URL::to('dashboard/headquarter/army')}}">Quân viễn chinh</a></li>
+	<li><a href="{{URL::to('dashboard/headquarter/expeditionary-army')}}">Quân viễn chinh</a></li>
     <li><a href="{{URL::to('dashboard/headquarter/defense')}}">Phòng thủ công trình</a></li>
     <li><a href="{{URL::to('dashboard/headquarter/colony')}}">Trạm thuộc địa</a></li>
 </ul>
@@ -19,6 +19,10 @@
 			@endforeach
 			
 		</table>
+
+	</div>
+	<div class="d-flex justify-content-end">
+		<a class="btn btn-secondary" href="attack">ĐI ĐẾN</a>
 	</div>
 <div>
 </div>

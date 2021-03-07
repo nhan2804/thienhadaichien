@@ -12,6 +12,8 @@ use App\ConstructPay;
 use App\Insight;
 use App\UserConstruct;
 use App\BuffAttr;
+use App\Galactic;
+use App\Galaxy;
 use App\UserResearch;
 use Session;
 
@@ -378,6 +380,19 @@ public function choose_planet(Request $r)
 {
     $d = User::find(Auth::user()->id);
     $d->planet = $r->id;
+    $galatic= Galactic::where('count_planet','<',50)->first();
+    if(!$galatic){
+        $new = new Galactic;
+        $new->location='1.1.1';
+        $new->id_galaxy=1;
+        $new->count_planet=1;
+        $new->save();
+        $new->location='1.1.1.'.$new->id;
+        $new->save();
+        $galatic = $new;
+    }
+    $d->location = $galatic->location.'.'.$d->id;
+    $d->id_galactic = $galatic->id;
     $d->fullname = $r->name;
     $d->save();
     return back();

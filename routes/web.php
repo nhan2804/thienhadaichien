@@ -20,7 +20,6 @@ Route::get('/login','HomeController@login');
 Route::get('/logout','HomeController@logout');
 Route::post('/login','UserController@login');
 Route::post('/register','UserController@register');
-
 Route::prefix('dashboard')->middleware(['login'])->group(function () {
     // chọn hành tinh
 	Route::post('/user/choose-planet/','DashboardController@choose_planet');
@@ -44,6 +43,10 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
     Route::get('/init','DashboardController@init');
 
     
+    //Tấn công
+    Route::get('/attack', 'AttackController@index');
+    Route::get('/attack/{username}', 'AttackController@attack_username');
+    Route::post('/attack/insert', 'AttackController@insert');
     
     // Route::get('/build/set-status/{id}','DashboardController@set_status');
     //Quân sự
@@ -66,11 +69,13 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
     // Phòng thủ
     Route::prefix('headquarter')->group(function () {
 
+        // quân viễn chinh
+        Route::get('/expeditionary-army','ArmyController@index');
+
         Route::get('/defense','DefenseController@index2');
         Route::get('/','DefenseController@overview');
-
-
-        Route::post('/defense/add','DefenseController@add');
+        // dùng chung thủ và tấn công
+        Route::post('/add','HeadQuarterController@add');
         Route::post('/defense/insert','DefenseController@insert');
         Route::post('/defense/detail','DefenseController@detail');
 
