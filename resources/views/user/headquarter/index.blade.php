@@ -7,7 +7,7 @@
 </ul>
 @endsection
 @section('content')
-	@yield('content')
+	
 	<h4>BỘ CHỈ HUY</h4>
 	<div>
 		<table border style="width: 100%;text-align: center;">

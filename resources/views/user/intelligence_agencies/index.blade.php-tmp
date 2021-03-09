@@ -1,9 +1,9 @@
 @extends('user.index')
 @section('left-bar')
 <ul class="p-0 list-menu">
-    <li><a href="{{URL::to('dashboard/overview')}}">Do thám quỹ đạo</a></li>
-    <li><a href="{{URL::to('dashboard/news')}}">Đào tạo trinh thám</a></li>
-    <li><a href="">Đào tạo phản gián</a></li>
+    <li><a href="{{URL::to('dashboard/headquarter/expeditionary-army')}}">Quân viễn chinh</a></li>
+    <li><a href="{{URL::to('dashboard/headquarter/defense')}}">Phòng thủ công trình</a></li>
+    <li><a href="{{URL::to('dashboard/headquarter/colony')}}">Trạm thuộc địa</a></li>
 </ul>
 @endsection
 @section('content')

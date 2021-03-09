@@ -42,20 +42,27 @@ class DefenseController extends Controller
         //     ->where('military_user.status_free',0)
         //     ->groupBy('id_mili_m')
         //     ->get();
+        // return $my_milis;
         return view('user.headquarter.index',['my_milis'=>$my_milis]);
 	}
     
     
     public function detail(Request $r)
     {
-    	$detail = DB::table('military')
-    		->select('*',DB::raw('COUNT(id_mili_m) as quantity'))
-            ->join('military_user', 'military_user.id_mili_m','military.id_m')
-            ->where('military_user.id_user_m',Auth::user()->id)
-            ->where('military_user.status_m',1)
-            ->where('military_user.id_con_def',$r->id)
-            ->groupBy('id_mili_m')
-            ->get();
+    	// $detail = DB::table('military')
+    	// 	->select('*',DB::raw('COUNT(id_mili_m) as quantity'))
+     //        ->join('military_user', 'military_user.id_mili_m','military.id_m')
+     //        ->where('military_user.id_user_m',Auth::user()->id)
+     //        ->where('military_user.status_m',1)
+     //        ->where('military_user.id_con_def',$r->id)
+     //        ->groupBy('id_mili_m')
+     //        ->get();
+        $detail=  DB::table('military')
+        // ->select('*',DB::raw('COUNT(id_mili_m) as quantity'))
+        ->join('military_action', 'military_action.id_mil','military.id_m')
+        ->where('military_action.id_user',Auth::user()->id)
+        ->where('military_action.id_con_def',$r->id)
+        ->get();
             return response()->json($detail);
     }
     public function insert(Request $r)
@@ -70,19 +77,7 @@ class DefenseController extends Controller
     	foreach ( $arr as $k => $v) {
             if($v){
                 $d=MilitaryUser::where('id_user_m',$id_u)->where('id_mili_m',$k)->where('status_m',1)->where('status_free',0)->take($v)->update(['status_free'=>1]);
-            
-
-            // $arr = [
-            //     'id_user'=>$id_u,
-            //     'id_con_def'=>$id_c,
-            //     'id_mil'=> $k,
-
-            //     'quantity'=>$v
-            // ];
-            // $update = [
-            //     'quantity'=>$v
-            // ];
-            // $military_action= MilitaryAction::updateOrCreate($arr, $update);
+       
             $check= MilitaryAction::where('id_user',$id_u)
             ->where('id_con_def',$id_c)
             ->where('id_mil',$k)

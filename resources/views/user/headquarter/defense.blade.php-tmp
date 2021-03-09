@@ -1,7 +1,7 @@
 @extends('user.index')
 @section('left-bar')
 <ul class="p-0 list-menu">
-    <li><a href="{{URL::to('dashboard/headquarter/army')}}">Quân viễn chinh</a></li>
+    <li><a href="{{URL::to('dashboard/headquarter/expeditionary-army')}}">Quân viễn chinh</a></li>
     <li><a href="{{URL::to('dashboard/headquarter/defense')}}">Phòng thủ công trình</a></li>
     <li><a href="{{URL::to('dashboard/headquarter/colony')}}">Trạm thuộc địa</a></li>
 </ul>
@@ -106,7 +106,7 @@
                $('#detail-body').html(render2(data));
            },
            error: function (argument) {
-           	alert("message?: DOMString")
+           	alert("Có lỗi xảy ra");
            }
          });
 
@@ -120,7 +120,12 @@
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
-               alert(data); // show response from the php script.
+              // alert(data); // show response from the php script.
+			   // console.log(data);
+           },
+		   error: function (jqXHR, textStatus, errorThrown) {
+		   	alert("Có lỗi xảy ra");
+           console.log(errorThrown);
            }
          });
          event.preventDefault();
@@ -128,12 +133,13 @@
 	$('.btn-defense').on('click', function(event) {
 		$('#id_c_input').val($(this).data('id'));
 		$.ajax({
-		url: 'defense/add',
+		url: 'add',
 		type: 'POST',
 		data: {id: $(this).data('id')},
 		})
 		.done(function(d) {
-			// console.log(render(d));
+			console.log(d);
+
 			$('#render-body').html(render(d));
 		})
 		.fail(function() {
@@ -156,7 +162,7 @@
 		let html='';
 		arr.forEach( function(e, i) {
 
-			let input = `<div><label>${e.name_m}</label>:${e.quantity}</div>`;
+			let input = `<div><label>${e.name_m}</label>:${e.quantity_mil}</div>`;
 			html+=input;
 		});
 		return html;

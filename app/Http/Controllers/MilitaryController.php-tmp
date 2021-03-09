@@ -99,11 +99,12 @@ class MilitaryController extends Controller {
 
 			$final_time = $con*$i;
 
-			$dt          = strtotime("+".$final_time." seconds", $dt);
-			$dt          = date("Y-m-d H:i:s", $dt);
-			$d->time_end = $dt;
-			$d->status_m = 0;
-			$d->hide     = 0;
+			$dt             = strtotime("+".$final_time." seconds", $dt);
+			$dt             = date("Y-m-d H:i:s", $dt);
+			$d->time_end    = $dt;
+			$d->status_m    = 0;
+			$d->status_free = 0;
+			$d->hide        = 0;
 			$d->save();
 		}
 

@@ -111,6 +111,7 @@ class MilitaryController extends Controller
             $dt = date("Y-m-d H:i:s",$dt);
             $d->time_end= $dt;
             $d->status_m= 0;
+            $d->status_free= 0;
             $d->hide= 0;
             $d->save();
         }
