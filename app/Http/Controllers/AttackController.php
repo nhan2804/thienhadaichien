@@ -8,6 +8,7 @@ use Auth;
 use App\UserConstruct;
 use App\MilitaryUser;
 use App\MilitaryAction;
+use App\Galactic;
 use DB;
 class AttackController extends Controller
 {
@@ -25,7 +26,10 @@ class AttackController extends Controller
 	    ->where('user_construct.status_c',1)
 	    ->groupBy('id_c')
 	    ->get();
-        return view('user.attack.attack',['cons'=>$cons]);
+        $id_galatic_current = Auth::user()->id_galactic;
+        $loca_user = User::find($r->id)->location;
+        $loca_galactic = Galactic::find($id_galatic_current)->location;
+        return view('user.attack.attack',['cons'=>$cons, 'location'=>$loca_galactic, 'loca_user'=>$loca_user]);
 
     }
     public function insert(Request $r)

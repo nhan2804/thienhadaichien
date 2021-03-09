@@ -71,11 +71,17 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
 
         // quân viễn chinh
         Route::get('/expeditionary-army','ArmyController@index');
-
+ 
         Route::get('/defense','DefenseController@index2');
         Route::get('/','DefenseController@overview');
-        // dùng chung thủ và tấn công
+        // dùng chung thủ và tấn công và do thám
         Route::post('/add','HeadQuarterController@add');
+
+        Route::post('/spy/insert','SpyController@insert');
+        Route::post('/spy','HeadQuarterController@spy');
+
+        
+
         Route::post('/defense/insert','DefenseController@insert');
         Route::post('/defense/detail','DefenseController@detail');
 

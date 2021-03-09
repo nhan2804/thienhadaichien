@@ -65,6 +65,10 @@ class DashboardController extends Controller
                 $tmp_arr[$v->id_resource]=$v->value;
             }
 
+                [
+                    '21'=>80,
+
+                ]
               // $discount_rese= UserResearch::select('id_re_got','value_r')->where('id_user_r',$id_u_c)->get();
 
             $discount_rese= DB::table('research')->select('id_re_got','value_r','quantity_r')
@@ -89,9 +93,9 @@ class DashboardController extends Controller
 
                 echo "Trc khi duoc cong $rs </br>";
                 
-                $value_add = array_key_exists($id_re,$tmp_arr) ? $tmp_arr[$id_re]:100;
-                $value_add_2 = array_key_exists($id_re,$tmp_arr_2) ? $tmp_arr_2[$id_re]:0;
-                echo "Trc khi duoc cong + gia tri khi xây ctrinh la $value_add %</br>";
+                $value_add = array_key_exists($id_re,$tmp_arr) ? $tmp_arr[$id_re]:100;// thuộc tính hành tinh(%5)
+                $value_add_2 = array_key_exists($id_re,$tmp_arr_2) ? $tmp_arr_2[$id_re]:0;// thuộc tính khi nghiên cứu
+                echo "Trc khi duoc cong + gia tri khi co thuoc tinh htinh la $value_add %</br>";
                 echo "Trc khi duoc cong + gia tri khi nghien cuu  $value_add_2 </br>";
                 $rs =$rs*$value_add/100 + $value_add_2;
                 

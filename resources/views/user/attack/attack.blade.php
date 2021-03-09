@@ -13,7 +13,50 @@
         <input type="text">
         <button>Tấn công thần tốc</button>
 	</div>
-   
+	<div class="border-p mb-1">
+		<div class="row">
+			<div class="col-lg-4">
+				<img src="https://gutta.lv/wp-content/uploads/2015/10/test-img.jpg" class="img" alt="">
+			</div>
+			<div class="col-8">
+				<h5 class="m-0">Quỹ đạo chung</h5>
+				<p>Location của thiên hà {{$location}}</p>
+				<div class="d-flex justify-content-end mb-1">
+					
+				</div>
+
+				 <div class="d-flex justify-content-end">
+					<div>
+						
+						<button data-id="{{$location}}"  data-toggle="modal" data-target="#exampleModal" class="btn btn-info btn-view">Xem chi tiết</button>
+						<button data-id="{{$location}}"  data-user="" class="btn-spy btn-modal btn btn-warning"  data-toggle="modal" data-target="#modal_spy">Do thám</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="border-p mb-1">
+		<div class="row">
+			<div class="col-lg-4">
+				<img src="https://gutta.lv/wp-content/uploads/2015/10/test-img.jpg" class="img" alt="">
+			</div>
+			<div class="col-8">
+				<h5 class="m-0">Quỹ đạo riêng</h5>
+				<p>Location của hành tinh {{$loca_user}}</p>
+				<div class="d-flex justify-content-end mb-1">
+					
+				</div>
+
+				 <div class="d-flex justify-content-end">
+					<div>
+						
+						<button data-id="{{$loca_user}}"  data-toggle="modal" data-target="#exampleModal" class="btn btn-info btn-view">Xem chi tiết</button>
+						<button data-id="{{$loca_user}}"  data-user="" class="btn-spy btn-modal btn btn-warning"  data-toggle="modal" data-target="#modal_spy">Do thám</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	@foreach($cons as $k=>$v)
 		<div class="border-p mb-1">
 			<div class="row">
@@ -38,6 +81,40 @@
 			</div>
 		</div>
 	@endforeach
+
+
+	<div class="modal fade" id="modal_spy" tabindex="-1" role="dialog" aria-labelledby="modal_spy" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLongTitle">Thêm mật vụ để do thám quỹ đạo này</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<form id="submit_spy">
+				
+			<div class="modal-body" id="render-body_spy">
+			  
+			</div>
+			<div class="d-flex justify-content-end">
+			</div>
+			
+			<div class="modal-footer">
+				{{-- <input type="hidden" value="1" id="id_c_input" name="id_c"> --}}
+				<input type="hidden" value="1" id="loca_user" name="loca_user">
+				
+			  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+			  <button type="submit" data-id="" id="btn-confirm_spy" class="btn btn-primary">Tấn Công</button>
+			</div>
+	  
+			</form>
+		  </div>
+		</div>
+	  </div>
+
+
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -121,6 +198,21 @@
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
+               alert(data); // show response from the php script.
+            //    location.reload();
+           }
+         });
+         event.preventDefault();
+	});
+	$('#submit_spy').on('submit', function(event) {
+		
+		let form = $(this);
+		 $.ajax({
+           type: "POST",
+           url: "../headquarter/spy/insert",
+           data: form.serialize(), // serializes the form's elements.
+           success: function(data)
+           {
                // alert(data); // show response from the php script.
                location.reload();
            }
@@ -138,6 +230,25 @@
 		.done(function(d) {
 			// console.log(render(d));
 			$('#render-body').html(render(d));
+		})
+		.fail(function() {
+			console.log("error");
+		})
+		.always(function() {
+			console.log("complete");
+		});
+	});
+	$('.btn-spy').on('click', function(event) {
+		$('#loca_user').val($(this).data('id'));
+		
+		$.ajax({
+		url: '../headquarter/spy',
+		type: 'POST',
+	
+		})
+		.done(function(d) {
+			// console.log(render(d));
+			$('#render-body_spy').html(render(d));
 		})
 		.fail(function() {
 			console.log("error");
