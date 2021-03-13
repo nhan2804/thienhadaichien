@@ -55,7 +55,7 @@ class MilitaryController extends Controller
         if(!$check){
             return "<p class='text-danger'>Vui lòng xây công trình tương ứng để tạo quân sự này</p>";
         }
-        
+
          $id_discount_build= 24;
          $get_discount= BuffAttr::where('id_planet',Auth::user()->planet)->where('id_resource',34)->first();
 
@@ -87,9 +87,9 @@ class MilitaryController extends Controller
         $con = $mi->time_build;
         $con= $con - abs(($get_discount*$con)/100);
         $con= $con*60;
-       
+
         $i->save();
-      
+
 
 
 
@@ -115,32 +115,32 @@ class MilitaryController extends Controller
             $d->hide= 0;
             $d->save();
         }
-       
+
         return "<p class='text-success'>Xây thành công</p> <script>location.reload()</script>";
-    
+
     }
      public function destroy_m(Request $r)
     {
-      
+
     try {
     $a=intval($r->num);
-    
+
 } catch (Exception $e) {
     return "Lỗi";
 }
 if(intval($r->num)<=0) return "Số không hợp lệ";
     $n = MilitaryUser::where('status_m',0)->where('id_user_m',Auth::user()->id)->where('id_mili_m',$r->id)->where('time_end', '>',date("Y-m-d H:i:s") )->count();
 
-    
+
 
 
     if(intval($r->num)>$n) return "Cần nhỏ hơn số lượng chưa đang xây";
-    
+
     $ccheck = MilitaryUser::where('status_m',0)->where('id_user_m',Auth::user()->id)->where('id_mili_m',$r->id)->where('time_end', '>',date("Y-m-d H:i:s") )->orderBy('time_end','desc')->take($r->num)->delete();
     $i = Insight::where('id_user',Auth::user()->id)->update(['food'=>DB::raw('food + 200'),'metal'=>DB::raw('metal + 2'),'fuel'=>DB::raw('fuel + 20'),'quartz'=>DB::raw('quartz + 10'),'money'=>DB::raw('money + 100')]);
     return "ok";
 
-    
+
     }
     public function detail($id)
     {
@@ -159,7 +159,7 @@ if(intval($r->num)<=0) return "Số không hợp lệ";
     }
     public function index(Request $r)
     {
-        
+
         $my_milis=  DB::table('military')
             ->join('military_user', 'military_user.id_mili_m','military.id_m')
             ->where('military_user.id_user_m',Auth::user()->id)
@@ -170,11 +170,11 @@ if(intval($r->num)<=0) return "Số không hợp lệ";
                 $result[$e->id_m][] = $e;
             }
         if($r->type){
-            $milis = Military::where('type',$r->type)->get();
+            $milis = Military::where('type',$r->type)->where('id_m', '!=', 13)->get();
         }else{
-            $milis = Military::all();
+            $milis = Military::where('id_m', '!=', 13)->get();
         }
-        
+
         return view('user.military.index', ['milis'=>$milis,'my_milis'=> $result]);
     }
 

@@ -65,10 +65,7 @@ class DashboardController extends Controller
                 $tmp_arr[$v->id_resource]=$v->value;
             }
 
-                [
-                    '21'=>80,
 
-                ]
               // $discount_rese= UserResearch::select('id_re_got','value_r')->where('id_user_r',$id_u_c)->get();
 
             $discount_rese= DB::table('research')->select('id_re_got','value_r','quantity_r')
@@ -92,17 +89,17 @@ class DashboardController extends Controller
                 $rs = $addion * $ok;
 
                 echo "Trc khi duoc cong $rs </br>";
-                
+
                 $value_add = array_key_exists($id_re,$tmp_arr) ? $tmp_arr[$id_re]:100;// thuộc tính hành tinh(%5)
                 $value_add_2 = array_key_exists($id_re,$tmp_arr_2) ? $tmp_arr_2[$id_re]:0;// thuộc tính khi nghiên cứu
                 echo "Trc khi duoc cong + gia tri khi co thuoc tinh htinh la $value_add %</br>";
                 echo "Trc khi duoc cong + gia tri khi nghien cuu  $value_add_2 </br>";
                 $rs =$rs*$value_add/100 + $value_add_2;
-                
+
                 $n_re = $v->name_resource;
                 echo "sau khi duoc cong $rs </br>";
                 echo "------ </br>";
-                
+
                 if ($n_re == "Lương thực")
                 {
                     $add = $rs >= $max_food ? $max_food : $add;
@@ -162,7 +159,7 @@ class DashboardController extends Controller
             echo "------------End User-------------";
         }
         // return $farmer;
-        
+
             // return $money;
         // UserConstruct::update(['got_at' => date("Y-m-d H:i:s") ]);
         DB::table('user_construct')->update(['got_at' => date("Y-m-d H:i:s")]);
@@ -244,33 +241,33 @@ class DashboardController extends Controller
     {
 
         $c = UserConstruct::where('id_construct_c',$id)->where('id_user_c',Auth::user()->id)->where('status_c',0)->where('time_end', '<=',date("Y-m-d H:i:s") )->update(['status_c'=>1,'hide'=>1]);
-        
+
         $f=500000*$c;
         $m=300000*$c;
         $fu=200000*$c;
         $q=200000*$c;
-        
+
         $dan= 1000000*$c;
-        
-        
+
+
         // bằng 8 là id nhà kho
-        if($id==8){  
+        if($id==8){
             $i = Insight::where('id_user',Auth::user()->id)->update(['max_food'=>DB::raw('max_food + '.$f),'max_metal'=>DB::raw('max_metal + '.$m),'max_fuel'=>DB::raw('max_fuel + '.$fu),'max_quartz'=>DB::raw('max_quartz + '.$q)]);
         }
         if($id==5){
             $i = Insight::where('id_user',Auth::user()->id)->update(['max_farmer'=>DB::raw('max_farmer + '.$dan)]);
         }
-       
-        
-      
+
+
+
         return back();
     }
     public function buy_construct($id,$num)
     {
 
-       
+
         $ccheck = UserConstruct::where('id_construct_c',$id)->where('id_user_c',Auth::user()->id)->where('status_c',0)->orderBy('time_end', 'desc')->first();
-        
+
             $num = intval($num);
         // Session::put('variableName', $value);
             $i = Insight::where('id_user',Auth::user()->id)->first();

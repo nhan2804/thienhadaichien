@@ -16,7 +16,7 @@ class SpyController extends Controller
     //
 
     public function index(Request $r){
-        
+
     }
     public function insert(Request $r)
     {
@@ -34,7 +34,10 @@ class SpyController extends Controller
                 ->where('id_mil', $k)
                 ->first();
                 if($check){
+
                     $check->quantity_mil=$check->quantity_mil+$v;
+                    if($k==13) $check->is_spy= $check->quantity_mil;
+                    if($k==12) $check->is_plane= $check->quantity_mil;
                     $check->save();
                 }else{
                     $new = new MilitaryAction;
@@ -49,11 +52,13 @@ class SpyController extends Controller
                     $dt = date("Y-m-d H:i:s");
                     $dt = strtotime($dt);
                     $dt = strtotime("+".$time." hours", $dt);
-     
+
                     $dt = date("Y-m-d H:i:s",$dt);
                     $new->id_user=$id_u;
                     $new->loca_user_spied = $loca_user;
                     $new->id_mil=$k;
+                    if($k==13) $new->is_spy= $v;
+                    if($k==12) $new->is_plane= $v;
                     $new->quantity_mil=$v;
                     $new->time_attack = $dt;
                     $new->save();

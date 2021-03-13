@@ -50,7 +50,7 @@
         </button>
       </div>
       <div class="modal-body" id="detail-body">
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -68,16 +68,16 @@
         </button>
       </div>
       <form id="submit">
-      	
+
       <div class="modal-body" id="render-body">
-        
+
       </div>
       <div class="d-flex justify-content-end">
       </div>
-      
+
       <div class="modal-footer">
       	<input type="hidden" value="1" id="id_c_input" name="id_c">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-danger" id="btn-close" data-dismiss="modal">Hủy</button>
         <button type="submit" data-id="" id="btn-confirm" class="btn btn-primary">Thủ</button>
       </div>
 
@@ -91,7 +91,7 @@
 	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 	    }
 	});
-	
+
 	$('.btn-view').on('click',function(event) {
 		event.preventDefault();
 
@@ -109,10 +109,10 @@
            	alert("Có lỗi xảy ra");
            }
          });
-		
+
 	});
 	$('#submit').on('submit', function(event) {
-		
+
 		let form = $(this);
 		 $.ajax({
            type: "POST",
@@ -120,8 +120,10 @@
            data: form.serialize(), // serializes the form's elements.
            success: function(data)
            {
-              // alert(data); // show response from the php script.
-			   // console.log(data);
+               $('#exampleModalLongTitle').html(data);
+            //   alert(data); // show response from the php script.
+			   console.log(data);
+               setTimeout(function(){ $('#btn-close').click() }, 1000);
            },
 		   error: function (jqXHR, textStatus, errorThrown) {
 		   	alert("Có lỗi xảy ra");
@@ -139,7 +141,7 @@
 		})
 		.done(function(d) {
 			console.log(d);
-			
+
 			$('#render-body').html(render(d));
 		})
 		.fail(function() {
@@ -152,7 +154,7 @@
 	function render(arr) {
 		let html='';
 		arr.forEach( function(e, i) {
-			
+
 			let input = `<div><label>${e.name_m}</label>:${e.quantity}<input type="number" min="1" max="${e.quantity}" name="${e.id_m}"></div>`;
 			html+=input;
 		});
@@ -161,15 +163,15 @@
 	function render2(arr) {
 		let html='';
 		arr.forEach( function(e, i) {
-			
+
 			let input = `<div><label>${e.name_m}</label>:${e.quantity_mil}</div>`;
 			html+=input;
 		});
 		return html;
 	}
 
-	
-	
+
+
 </script>
 
 

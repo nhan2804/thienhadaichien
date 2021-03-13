@@ -9,7 +9,7 @@ use App\MilitaryUser;
 use App\MilitaryAction;
 class DefenseController extends Controller
 {
-	
+
 	public function index2()
     {
     	 $cons_own=  DB::table('construction')
@@ -45,8 +45,8 @@ class DefenseController extends Controller
         // return $my_milis;
         return view('user.headquarter.index',['my_milis'=>$my_milis]);
 	}
-    
-    
+
+
     public function detail(Request $r)
     {
     	// $detail = DB::table('military')
@@ -72,12 +72,12 @@ class DefenseController extends Controller
     	$id_c = $r->id_c;
     	array_pop($arr);
         // array_filter($arr);
-       
+
     	$id_u=Auth::user()->id;
     	foreach ( $arr as $k => $v) {
             if($v){
                 $d=MilitaryUser::where('id_user_m',$id_u)->where('id_mili_m',$k)->where('status_m',1)->where('status_free',0)->take($v)->update(['status_free'=>1]);
-       
+
             $check= MilitaryAction::where('id_user',$id_u)
             ->where('id_con_def',$id_c)
             ->where('id_mil',$k)
@@ -96,6 +96,6 @@ class DefenseController extends Controller
             }
         }
     	}
-    	return "ok lun";
+    	return "<span class='text-success'>Phòng thủ thành công</span>";
     }
 }

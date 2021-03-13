@@ -26,14 +26,14 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
 	Route::post('/user/planet/','DashboardController@planet');
 	Route::get('/user/{id}','DashboardController@choose_planet');
     Route::get('/update-all','DashboardController@update_all');
-	
+
     // Xây dựng công trình
     Route::post('/build/destroy','DashboardController@destroy_c');
     Route::get('/build/built','DashboardController@built');
 	Route::get('/build/hide','DashboardController@hideAll');
     Route::resource('/build','DashboardController');
     Route::get('/build/construct-detail/{id}','DashboardController@detail_construct');
-    
+
     Route::get('/build/buy/{id}/{num}','DashboardController@buy_construct');
     Route::get('/build/set-status/{id}','DashboardController@set_status');
 
@@ -42,12 +42,12 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
     Route::get('/build/hide','DashboardController@hideAll');
     Route::get('/init','DashboardController@init');
 
-    
+
     //Tấn công
     Route::get('/attack', 'AttackController@index');
     Route::get('/attack/{username}', 'AttackController@attack_username');
     Route::post('/attack/insert', 'AttackController@insert');
-    
+
     // Route::get('/build/set-status/{id}','DashboardController@set_status');
     //Quân sự
 
@@ -62,7 +62,7 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
 
     Route::get('/overview','HomeUserController@overview');
     Route::get('/news','HomeUserController@news');
-    Route::get('/intelligence-agencies','HomeUserController@intelligence_agencies');
+    Route::resource('/intelligence-agencies','AgenciesController');
     // Route::get('/headquarter','HomeUserController@headquarter');
     // Route::get('/headquarter/army','HomeUserController@army');
 
@@ -71,7 +71,7 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
 
         // quân viễn chinh
         Route::get('/expeditionary-army','ArmyController@index');
- 
+
         Route::get('/defense','DefenseController@index2');
         Route::get('/','DefenseController@overview');
         // dùng chung thủ và tấn công và do thám
@@ -80,7 +80,7 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
         Route::post('/spy/insert','SpyController@insert');
         Route::post('/spy','HeadQuarterController@spy');
 
-        
+
 
         Route::post('/defense/insert','DefenseController@insert');
         Route::post('/defense/detail','DefenseController@detail');
@@ -95,11 +95,11 @@ Route::prefix('dashboard')->middleware(['login'])->group(function () {
 
 
     //Nghiên cứu
-    
+
     Route::get('/research','ResearchController@index');
     Route::get('/research/buy/{id}','ResearchController@buy');
     Route::post('/research/set-status','ResearchController@set_status');
-    
+
 });
 
 Route::prefix('admin')->group(function () {
@@ -129,5 +129,5 @@ Route::prefix('admin')->group(function () {
     Route::resource('/research','Admin\ResearchController');
     Route::post('/planet/buff','Admin\PlanetController@save_buff');
     Route::get('/planet/buff/{id}','Admin\PlanetController@buff');
-    
+
 });
